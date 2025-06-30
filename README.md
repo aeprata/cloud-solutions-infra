@@ -75,7 +75,7 @@ Before running Terraform, complete the following:
 #### Create S3 Bucket for Remote State
 
 ```bash
-aws s3api create-bucket --bucket "tf-state-cloud-solutions"   --region eu-west-3   --create-bucket-configuration LocationConstraint=eu-west-3
+aws s3api create-bucket --bucket "tf-state-dev-s3"   --region eu-west-3   --create-bucket-configuration LocationConstraint=eu-west-3
 ```
 
 > This S3 bucket is used to store the Terraform remote state.
@@ -89,8 +89,22 @@ aws secretsmanager create-secret   --name "dev/database/password"   --secret-str
 
 ### 1. Initialize Terraform
 
+- **Development:**
+
 ```bash
-terraform init -backend-config="backends/cloud_solutions.tfbackend" -reconfigure"
+terraform init -backend-config="backends/cloud_solutions_dev.tfvars" -reconfigure
+```
+
+- **Pre-production:**
+
+```bash
+terraform init -backend-config="backends/cloud_solutions_pre.tfvars" -reconfigure
+```
+
+- **Production:**
+
+```bash
+terraform init -backend-config="backends/cloud_solutions_prod.tfvars" -reconfigure
 ```
 
 Verify available workspaces:
@@ -118,19 +132,19 @@ terraform workspace select cloud_solutions_dev
 - **Development:**
 
 ```bash
-terraform plan   -var-file="environments/dev/developing.tfvars"   
+terraform plan -var-file="environments/dev/developing.tfvars"   
 ```
 
 - **Pre-production:**
 
 ```bash
-terraform plan   -var-file="environments/preprod/preproduction.tfvars"   
+terraform plan -var-file="environments/preprod/preproduction.tfvars"   
 ```
 
 - **Production:**
 
 ```bash
-terraform plan   -var-file="environments/prod/production.tfvars"   
+terraform plan -var-file="environments/prod/production.tfvars"   
 ```
 
 
@@ -139,17 +153,19 @@ terraform plan   -var-file="environments/prod/production.tfvars"
 - **Development:**
 
 ```bash
-terraform apply   -var-file="environments/dev/developing.tfvars"   
+terraform apply -var-file="environments/dev/developing.tfvars"   
+```
+
 - **Pre-production:**
 
 ```bash
-terraform apply   -var-file="environments/preprod/preproduction.tfvars" 
+terraform apply -var-file="environments/preprod/preproduction.tfvars" 
 ```
 
 - **Production:**
 
 ```bash
-terraform apply   -var-file="environments/prod/production.tfvars"   
+terraform apply -var-file="environments/prod/production.tfvars"   
 ```
 
 

@@ -1,4 +1,4 @@
-# Cloud Solutions Web app infrastructure repo
+# Cloud Solutions Web app infrastructure repository
 
 **A Terraform project that deploys a scalable web application with integrated security and observability.**  
 
@@ -178,4 +178,7 @@ terraform destroy   -var-file="environments/dev/config.tfvars"
 ```
 
 ---
+
+> **Note:**
+> Some code in this repository is commented out to enable HTTPS configuration. It is left commented intentionally to deploy the infrastructure without needing to create or manage an SSL/TLS certificate up front. To enable HTTPS, simply uncomment the relevant sections and provide your certificate details.
 
